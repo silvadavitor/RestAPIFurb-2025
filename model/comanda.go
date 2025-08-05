@@ -13,3 +13,10 @@ type ComandaResumoDTO struct {
 	NomeUsuario     string `json:"nomeUsuario"`
 	TelefoneUsuario string `json:"telefoneUsuario"`
 }
+
+type ComandaUpdateDTO struct {
+	IDUsuario       *uint         `json:"idUsuario,omitempty"`
+	NomeUsuario     *string       `json:"nomeUsuario,omitempty"`
+	TelefoneUsuario *string       `json:"telefoneUsuario,omitempty"`
+	Produtos        *[]ProdutoDTO `json:"produtos,omitempty"`
+}

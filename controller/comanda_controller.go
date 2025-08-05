@@ -113,13 +113,42 @@ func (ctrl *ComandaController) UpdateComanda(ctx *gin.Context) {
 		return
 	}
 
-	var comanda model.Comanda
-	if err := ctx.ShouldBindJSON(&comanda); err != nil {
+	var payload model.ComandaUpdateDTO
+	if err := ctx.ShouldBindJSON(&payload); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	comandaAtualizada, err := ctrl.usecase.UpdateComanda(uint(id), comanda)
+	// Busca a comanda atual
+	comandaAtual, err := ctrl.usecase.GetComandaById(uint(id))
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{"error": "Comanda não encontrada"})
+		return
+	}
+
+	// Atualiza apenas os campos presentes
+	if payload.IDUsuario != nil {
+		comandaAtual.IDUsuario = *payload.IDUsuario
+	}
+	if payload.NomeUsuario != nil {
+		comandaAtual.NomeUsuario = *payload.NomeUsuario
+	}
+	if payload.TelefoneUsuario != nil {
+		comandaAtual.TelefoneUsuario = *payload.TelefoneUsuario
+	}
+	if payload.Produtos != nil {
+		var produtos []model.Produto
+		for _, p := range *payload.Produtos {
+			produtos = append(produtos, model.Produto{
+				ID:    p.ID,
+				Nome:  p.Nome,
+				Preco: p.Preco,
+			})
+		}
+		comandaAtual.Produtos = produtos
+	}
+
+	comandaAtualizada, err := ctrl.usecase.UpdateComanda(uint(id), comandaAtual)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
