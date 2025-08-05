@@ -1,4 +1,4 @@
-module api-rest
+module RestAPIFurb-2025
 
 go 1.24
 
