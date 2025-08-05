@@ -37,3 +37,7 @@ func (uc *ComandaUsecase) UpdateComanda(id uint, comandaAtualizada model.Comanda
 	// Salvar comanda atualizada
 	return uc.repo.UpdateComanda(id, existente)
 }
+
+func (uc *ComandaUsecase) DeleteComanda(id uint) error {
+	return uc.repo.DeleteComanda(id)
+}
