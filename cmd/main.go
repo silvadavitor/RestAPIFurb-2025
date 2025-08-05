@@ -20,12 +20,15 @@ func main() {
 
 	//Camada repository
 	ComandaRepository := repository.NewComandaRepository(dbConnection)
+	LoginRepository := repository.NewLoginRepository(dbConnection)
 
 	//Camada usecase
 	ComandaUseCase := usecase.NewComandaUsecase(ComandaRepository)
+	LoginUseCase := usecase.NewLoginUsecase(LoginRepository)
 
 	//Camada controllers
 	ComandaController := controller.NewComandaController(ComandaUseCase)
+	LoginController := controller.NewLoginController(LoginUseCase)
 
 	server.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
@@ -42,6 +45,8 @@ func main() {
 	server.PUT("/RestAPIFurb/comandas/:id", ComandaController.UpdateComanda)
 
 	server.DELETE("/RestAPIFurb/comandas/:id", middleware.JWTAuthMiddleware(), ComandaController.DeleteComanda)
+
+	server.POST("/RestAPIFurb/login", LoginController.Login)
 
 	fmt.Println("Rodando servidor na porta :8080")
 
