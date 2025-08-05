@@ -11,11 +11,11 @@ type LoginRepository interface {
 type MockLoginRepository struct{}
 
 func NewLoginRepository(_ interface{}) LoginRepository {
-	// O parâmetro (como dbConnection) é ignorado nesse mock
+	// O parâmetro (como dbConnection) é ignorado
 	return &MockLoginRepository{}
 }
 
 func (r *MockLoginRepository) BuscarUsuario(login model.LoginInput) bool {
-	// Mock: simula validação de usuário/senha no “banco”
+	// Mock
 	return login.Usuario == "admin" && login.Senha == "123456"
 }
