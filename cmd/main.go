@@ -3,6 +3,7 @@ package main
 import (
 	"RestAPIFurb-2025/controller"
 	"RestAPIFurb-2025/db"
+	"RestAPIFurb-2025/middleware"
 	"RestAPIFurb-2025/repository"
 	"RestAPIFurb-2025/usecase"
 	"fmt"
@@ -40,7 +41,7 @@ func main() {
 
 	server.PUT("/RestAPIFurb/comandas/:id", ComandaController.UpdateComanda)
 
-	server.DELETE("/RestAPIFurb/comandas/:id", ComandaController.DeleteComanda)
+	server.DELETE("/RestAPIFurb/comandas/:id", middleware.JWTAuthMiddleware(), ComandaController.DeleteComanda)
 
 	fmt.Println("Rodando servidor na porta :8080")
 
