@@ -1,0 +1,235 @@
+basePath: /
+definitions:
+  model.Comanda:
+    properties:
+      id:
+        type: integer
+      idUsuario:
+        type: integer
+      nomeUsuario:
+        type: string
+      produtos:
+        items:
+          $ref: '#/definitions/model.Produto'
+        type: array
+      telefoneUsuario:
+        type: string
+    required:
+    - idUsuario
+    - nomeUsuario
+    - produtos
+    - telefoneUsuario
+    type: object
+  model.Produto:
+    properties:
+      id:
+        type: integer
+      nome:
+        type: string
+      preco:
+        type: number
+    required:
+    - nome
+    - preco
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: vitsilva@furb.br
+    name: Vitor da Silva
+  description: Documentação Swagger da API de comandas da prova de suficiência Web
+    II.
+  title: REST API Comandas FURB
+  version: "1.0"
+paths:
+  /RestAPIFurb/comandas:
+    get:
+      description: Retorna todas as comandas cadastradas
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Comanda'
+            type: array
+      summary: Lista todas as comandas
+      tags:
+      - Comandas
+    post:
+      consumes:
+      - application/json
+      description: Cria uma nova comanda com os dados fornecidos
+      parameters:
+      - description: Dados da nova comanda
+        in: body
+        name: comanda
+        required: true
+        schema:
+          $ref: '#/definitions/model.Comanda'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Comanda'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Cria nova comanda
+      tags:
+      - Comandas
+  /RestAPIFurb/comandas/{id}:
+    delete:
+      description: Remove uma comanda existente pelo ID (Autenticação JWT necessária)
+      parameters:
+      - description: ID da Comanda
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Remove comanda existente
+      tags:
+      - Comandas
+    get:
+      description: Retorna uma comanda pelo ID
+      parameters:
+      - description: ID da Comanda
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Comanda'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Busca comanda por ID
+      tags:
+      - Comandas
+    put:
+      consumes:
+      - application/json
+      description: Atualiza uma comanda existente pelo ID
+      parameters:
+      - description: ID da Comanda
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Dados para atualizar a comanda
+        in: body
+        name: comanda
+        required: true
+        schema:
+          $ref: '#/definitions/model.Comanda'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Comanda'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Atualiza comanda existente
+      tags:
+      - Comandas
+  /RestAPIFurb/login:
+    post:
+      consumes:
+      - application/json
+      description: Gera um token JWT simples para teste
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Gera token JWT
+      tags:
+      - Autenticação
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

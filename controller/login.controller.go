@@ -17,6 +17,15 @@ func NewLoginController(uc *usecase.LoginUsecase) *LoginController {
 	return &LoginController{usecase: uc}
 }
 
+// Login godoc
+// @Summary Gera token JWT
+// @Description Gera um token JWT simples para teste
+// @Tags Autenticação
+// @Accept json
+// @Produce json
+// @Success 200 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /RestAPIFurb/login [post]
 func (ctrl *LoginController) Login(ctx *gin.Context) {
 	var login model.LoginInput
 

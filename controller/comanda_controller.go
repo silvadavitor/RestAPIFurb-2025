@@ -3,9 +3,10 @@ package controller
 import (
 	"RestAPIFurb-2025/model"
 	"RestAPIFurb-2025/usecase"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
 type ComandaController struct {
@@ -16,6 +17,13 @@ func NewComandaController(uc *usecase.ComandaUsecase) *ComandaController {
 	return &ComandaController{usecase: uc}
 }
 
+// GetComandas godoc
+// @Summary Lista todas as comandas
+// @Description Retorna todas as comandas cadastradas
+// @Tags Comandas
+// @Produce json
+// @Success 200 {array} model.Comanda
+// @Router /RestAPIFurb/comandas [get]
 func (ctrl *ComandaController) GetComandas(ctx *gin.Context) {
 	comandas, err := ctrl.usecase.GetComandas()
 	if err != nil {
@@ -25,6 +33,16 @@ func (ctrl *ComandaController) GetComandas(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, comandas)
 }
 
+// GetComandaById godoc
+// @Summary Busca comanda por ID
+// @Description Retorna uma comanda pelo ID
+// @Tags Comandas
+// @Produce json
+// @Param id path int true "ID da Comanda"
+// @Success 200 {object} model.Comanda
+// @Failure 400 {object} map[string]string
+// @Failure 404 {object} map[string]string
+// @Router /RestAPIFurb/comandas/{id} [get]
 func (ctrl *ComandaController) GetComandaById(ctx *gin.Context) {
 	id, err := strconv.ParseUint(ctx.Param("id"), 10, 64)
 	if err != nil {
@@ -40,6 +58,17 @@ func (ctrl *ComandaController) GetComandaById(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, comanda)
 }
 
+// CreateComanda godoc
+// @Summary Cria nova comanda
+// @Description Cria uma nova comanda com os dados fornecidos
+// @Tags Comandas
+// @Accept json
+// @Produce json
+// @Param comanda body model.Comanda true "Dados da nova comanda"
+// @Success 201 {object} model.Comanda
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /RestAPIFurb/comandas [post]
 func (ctrl *ComandaController) CreateComanda(ctx *gin.Context) {
 	var comanda model.Comanda
 
@@ -57,6 +86,18 @@ func (ctrl *ComandaController) CreateComanda(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, comandaCriada)
 }
 
+// UpdateComanda godoc
+// @Summary Atualiza comanda existente
+// @Description Atualiza uma comanda existente pelo ID
+// @Tags Comandas
+// @Accept json
+// @Produce json
+// @Param id path int true "ID da Comanda"
+// @Param comanda body model.Comanda true "Dados para atualizar a comanda"
+// @Success 200 {object} model.Comanda
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /RestAPIFurb/comandas/{id} [put]
 func (ctrl *ComandaController) UpdateComanda(ctx *gin.Context) {
 	id, err := strconv.ParseUint(ctx.Param("id"), 10, 64)
 	if err != nil {
@@ -79,6 +120,19 @@ func (ctrl *ComandaController) UpdateComanda(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, comandaAtualizada)
 }
 
+// DeleteComanda godoc
+// @Summary Remove comanda existente
+// @Description Remove uma comanda existente pelo ID (Autenticação JWT necessária)
+// @Tags Comandas
+// @Security ApiKeyAuth
+// @Param id path int true "ID da Comanda"
+// @Produce json
+// @Success 200 {object} map[string]interface{}
+// @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Failure 404 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /RestAPIFurb/comandas/{id} [delete]
 func (ctrl *ComandaController) DeleteComanda(ctx *gin.Context) {
 	id, err := strconv.ParseUint(ctx.Param("id"), 10, 64)
 	if err != nil {

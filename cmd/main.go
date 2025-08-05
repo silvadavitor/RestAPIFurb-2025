@@ -7,10 +7,23 @@ import (
 	"RestAPIFurb-2025/repository"
 	"RestAPIFurb-2025/usecase"
 	"fmt"
-
 	"github.com/gin-gonic/gin"
+
+	_ "RestAPIFurb-2025/docs"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+// @title REST API Comandas FURB
+// @version 1.0
+// @description Documentação Swagger da API de comandas da prova de suficiência Web II.
+// @contact.name Vitor da Silva
+// @contact.email vitsilva@furb.br
+// @host localhost:8080
+// @BasePath /
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
 func main() {
 	server := gin.Default()
 
@@ -48,6 +61,8 @@ func main() {
 	server.DELETE("/RestAPIFurb/comandas/:id", middleware.JWTAuthMiddleware(), ComandaController.DeleteComanda)
 
 	server.POST("/RestAPIFurb/login", LoginController.Login)
+
+	server.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	fmt.Println("Rodando servidor na porta :8080")
 
