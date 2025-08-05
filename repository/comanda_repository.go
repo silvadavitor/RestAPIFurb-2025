@@ -2,6 +2,8 @@ package repository
 
 import (
 	"RestAPIFurb-2025/model"
+	"errors"
+	"fmt"
 	"gorm.io/gorm"
 )
 
@@ -30,4 +32,28 @@ func (repo *ComandaRepository) GetComandaById(id uint) (model.Comanda, error) {
 func (repo *ComandaRepository) CreateComanda(comanda model.Comanda) (model.Comanda, error) {
 	err := repo.db.Create(&comanda).Error
 	return comanda, err
+}
+
+func (repo *ComandaRepository) UpdateComanda(id uint, comanda model.Comanda) (model.Comanda, error) {
+	err := repo.db.Session(&gorm.Session{FullSaveAssociations: true}).Save(&comanda).Error
+	return comanda, err
+}
+
+func (repo *ComandaRepository) DeleteComanda(id uint) error {
+	var comanda model.Comanda
+	// Verifica se a comanda existe
+	if err := repo.db.First(&comanda, id).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return fmt.Errorf("comanda não encontrada")
+		}
+		return err
+	}
+
+	// Remove os produtos associados
+	if err := repo.db.Where("comanda_id = ?", id).Delete(&model.Produto{}).Error; err != nil {
+		return err
+	}
+
+	// Remove a comanda
+	return repo.db.Delete(&comanda).Error
 }

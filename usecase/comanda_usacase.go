@@ -26,3 +26,14 @@ func (uc *ComandaUsecase) GetComandaById(id uint) (model.Comanda, error) {
 func (uc *ComandaUsecase) CreateComanda(comanda model.Comanda) (model.Comanda, error) {
 	return uc.repo.CreateComanda(comanda)
 }
+
+func (uc *ComandaUsecase) UpdateComanda(id uint, comandaAtualizada model.Comanda) (model.Comanda, error) {
+	// Buscar comanda atual no banco
+	existente, err := uc.repo.GetComandaById(id)
+	if err != nil {
+		return model.Comanda{}, err
+	}
+
+	// Salvar comanda atualizada
+	return uc.repo.UpdateComanda(id, existente)
+}

@@ -38,6 +38,10 @@ func main() {
 
 	server.POST("/RestAPIFurb/comandas", ComandaController.CreateComanda)
 
+	server.PUT("/RestAPIFurb/comandas/:id", ComandaController.UpdateComanda)
+
+	server.DELETE("/RestAPIFurb/comandas/:id", ComandaController.DeleteComanda)
+
 	fmt.Println("Rodando servidor na porta :8080")
 
 	server.Run(":8080")
