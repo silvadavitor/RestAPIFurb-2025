@@ -7,3 +7,9 @@ type Comanda struct {
 	TelefoneUsuario string    `json:"telefoneUsuario" binding:"required"`
 	Produtos        []Produto `gorm:"foreignKey:ComandaID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"produtos" binding:"required,dive"`
 }
+
+type ComandaResumoDTO struct {
+	IDUsuario       uint   `json:"idUsuario"`
+	NomeUsuario     string `json:"nomeUsuario"`
+	TelefoneUsuario string `json:"telefoneUsuario"`
+}

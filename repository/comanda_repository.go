@@ -19,7 +19,7 @@ func NewComandaRepository(db *gorm.DB) *ComandaRepository {
 
 func (repo *ComandaRepository) GetComandas() ([]model.Comanda, error) {
 	var comandas []model.Comanda
-	err := repo.db.Preload("Produtos").Find(&comandas).Error
+	err := repo.db.Find(&comandas).Error
 	return comandas, err
 }
 

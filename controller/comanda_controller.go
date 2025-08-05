@@ -30,7 +30,15 @@ func (ctrl *ComandaController) GetComandas(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	ctx.JSON(http.StatusOK, comandas)
+	var dto []model.ComandaResumoDTO
+	for _, c := range comandas {
+		dto = append(dto, model.ComandaResumoDTO{
+			IDUsuario:       c.IDUsuario,
+			NomeUsuario:     c.NomeUsuario,
+			TelefoneUsuario: c.TelefoneUsuario,
+		})
+	}
+	ctx.JSON(http.StatusOK, dto)
 }
 
 // GetComandaById godoc
