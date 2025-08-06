@@ -111,3 +111,4 @@ Requer autenticação.
 ```
 
 ## Estrutura utilizada
+<img width="1280" height="720" alt="Image" src="https://github.com/user-attachments/assets/eaa7c526-0ab4-46cf-9766-fc321c5ee7b8" />
