@@ -63,6 +63,7 @@ func main() {
 	server.POST("/RestAPIFurb/login", LoginController.Login)
 
 	server.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	// http://localhost:8080/RestAPIFurb/swagger/index.html
 
 	fmt.Println("Rodando servidor na porta :8080")
 
