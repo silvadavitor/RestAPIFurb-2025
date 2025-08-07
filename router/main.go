@@ -20,7 +20,7 @@ import (
 // @contact.name Vitor da Silva
 // @contact.email vitsilva@furb.br
 // @host localhost:8080
-// @BasePath /
+// @BasePath /RestAPIFurb/
 // @securityDefinitions.apikey ApiKeyAuth
 // @in header
 // @name Authorization
