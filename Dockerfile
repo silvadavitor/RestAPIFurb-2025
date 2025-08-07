@@ -6,6 +6,6 @@ COPY . .
 
 EXPOSE 8080
 
-RUN go build -o main cmd/main.go
+RUN go build -o main router/main.go
 
 CMD ["./main"]
