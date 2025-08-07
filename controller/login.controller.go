@@ -23,7 +23,7 @@ func NewLoginController(uc *usecase.LoginUsecase) *LoginController {
 // @Tags Autenticação
 // @Accept json
 // @Produce json
-// @Param login body model.Login true "Dados do usuario"
+// @Param login body model.LoginInput true "Dados do usuario"
 // @Success 200 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /RestAPIFurb/login [post]

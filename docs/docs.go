@@ -264,6 +264,23 @@ const docTemplate = `{
                 }
             }
         },
+        "/RestAPIFurb/docs/models": {
+            "get": {
+                "description": "Modelos auxiliares para documentação do Swagger",
+                "tags": [
+                    "Docs"
+                ],
+                "summary": "Modelos usados na API",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.LoginInput"
+                        }
+                    }
+                }
+            }
+        },
         "/RestAPIFurb/login": {
             "post": {
                 "description": "Gera um token JWT simples para teste",
@@ -277,6 +294,17 @@ const docTemplate = `{
                     "Autenticação"
                 ],
                 "summary": "Gera token JWT",
+                "parameters": [
+                    {
+                        "description": "Dados do usuario",
+                        "name": "login",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.LoginInput"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -330,12 +358,73 @@ const docTemplate = `{
                 }
             }
         },
+        "model.ComandaResumoDTO": {
+            "type": "object",
+            "properties": {
+                "idUsuario": {
+                    "type": "integer"
+                },
+                "nomeUsuario": {
+                    "type": "string"
+                },
+                "telefoneUsuario": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.ComandaUpdateDTO": {
+            "type": "object",
+            "properties": {
+                "idUsuario": {
+                    "type": "integer"
+                },
+                "nomeUsuario": {
+                    "type": "string"
+                },
+                "produtos": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.ProdutoDTO"
+                    }
+                },
+                "telefoneUsuario": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.LoginInput": {
+            "type": "object",
+            "properties": {
+                "senha": {
+                    "type": "string",
+                    "example": "123456"
+                },
+                "usuario": {
+                    "type": "string",
+                    "example": "admin"
+                }
+            }
+        },
         "model.Produto": {
             "type": "object",
             "required": [
                 "nome",
                 "preco"
             ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "nome": {
+                    "type": "string"
+                },
+                "preco": {
+                    "type": "number"
+                }
+            }
+        },
+        "model.ProdutoDTO": {
+            "type": "object",
             "properties": {
                 "id": {
                     "type": "integer"

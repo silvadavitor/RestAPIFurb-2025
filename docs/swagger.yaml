@@ -20,6 +20,37 @@ definitions:
     - produtos
     - telefoneUsuario
     type: object
+  model.ComandaResumoDTO:
+    properties:
+      idUsuario:
+        type: integer
+      nomeUsuario:
+        type: string
+      telefoneUsuario:
+        type: string
+    type: object
+  model.ComandaUpdateDTO:
+    properties:
+      idUsuario:
+        type: integer
+      nomeUsuario:
+        type: string
+      produtos:
+        items:
+          $ref: '#/definitions/model.ProdutoDTO'
+        type: array
+      telefoneUsuario:
+        type: string
+    type: object
+  model.LoginInput:
+    properties:
+      senha:
+        example: "123456"
+        type: string
+      usuario:
+        example: admin
+        type: string
+    type: object
   model.Produto:
     properties:
       id:
@@ -31,6 +62,15 @@ definitions:
     required:
     - nome
     - preco
+    type: object
+  model.ProdutoDTO:
+    properties:
+      id:
+        type: integer
+      nome:
+        type: string
+      preco:
+        type: number
     type: object
 host: localhost:8080
 info:
@@ -204,11 +244,29 @@ paths:
       summary: Atualiza comanda existente
       tags:
       - Comandas
+  /RestAPIFurb/docs/models:
+    get:
+      description: Modelos auxiliares para documentação do Swagger
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.LoginInput'
+      summary: Modelos usados na API
+      tags:
+      - Docs
   /RestAPIFurb/login:
     post:
       consumes:
       - application/json
       description: Gera um token JWT simples para teste
+      parameters:
+      - description: Dados do usuario
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/model.LoginInput'
       produces:
       - application/json
       responses:

@@ -189,3 +189,16 @@ func (ctrl *ComandaController) DeleteComanda(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, gin.H{"success": gin.H{"text": "comanda removida"}})
 }
+
+// DummyModelDoc godoc
+// @Tags Docs
+// @Summary Modelos usados na API
+// @Description Modelos auxiliares para documentação do Swagger
+// @Success 200 {object} model.Comanda
+// @Success 200 {object} model.ComandaResumoDTO
+// @Success 200 {object} model.ComandaUpdateDTO
+// @Success 200 {object} model.Produto
+// @Success 200 {object} model.ProdutoDTO
+// @Success 200 {object} model.LoginInput
+// @Router /RestAPIFurb/docs/models [get]
+func DummyModelDoc(ctx *gin.Context) {}
