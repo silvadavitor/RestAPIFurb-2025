@@ -1,4 +1,3 @@
-basePath: /
 definitions:
   model.Comanda:
     properties:

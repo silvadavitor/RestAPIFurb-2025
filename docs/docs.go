@@ -451,7 +451,7 @@ const docTemplate = `{
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
 	Host:             "localhost:8080",
-	BasePath:         "/",
+	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "REST API Comandas FURB",
 	Description:      "Documentação Swagger da API de comandas da prova de suficiência Web II.",

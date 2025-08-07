@@ -20,7 +20,6 @@ import (
 // @contact.name Vitor da Silva
 // @contact.email vitsilva@furb.br
 // @host localhost:8080
-// @BasePath /RestAPIFurb/
 // @securityDefinitions.apikey ApiKeyAuth
 // @in header
 // @name Authorization
@@ -63,7 +62,7 @@ func main() {
 	server.POST("/RestAPIFurb/login", LoginController.Login)
 
 	server.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	// http://localhost:8080/RestAPIFurb/swagger/index.html
+	// http://localhost:8080/swagger/index.html
 
 	fmt.Println("Rodando servidor na porta :8080")
 
